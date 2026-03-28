@@ -12,7 +12,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-add_executable(${PROJECT_NAME} src/interrupt.c)
+add_executable(${PROJECT_NAME} src/interrupt.c
+        ../wifi/include/lwipopts.h)
 pico_enable_stdio_usb(${PROJECT_NAME}  1)
 
 target_link_libraries(${PROJECT_NAME} pico_stdlib)
