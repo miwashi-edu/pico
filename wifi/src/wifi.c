@@ -13,6 +13,7 @@
 static volatile bool button_pressed = false;
 
 void button_callback(uint gpio, uint32_t events) {
+    printf("Button Pressed\n");
     button_pressed = true;
 }
 
@@ -62,6 +63,8 @@ int main() {
     if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD,
                                             CYW43_AUTH_WPA2_AES_PSK, 10000)) {
         printf("WiFi connection failed\n");
+        printf(WIFI_SSID);
+        printf(WIFI_PASSWORD);
         return 1;
     }
 
