@@ -1,4 +1,5 @@
 #include "pico/stdlib.h"
+#include <stdio.h>
 
 #ifndef LOG_DELAY_MS
 #define LOG_DELAY_MS 250

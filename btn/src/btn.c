@@ -1,4 +1,5 @@
 #include "pico/stdlib.h"
+#include <stdio.h>
 
 #define LOG_DELAY_MS 250
 #define BUTTON_PIN 15
