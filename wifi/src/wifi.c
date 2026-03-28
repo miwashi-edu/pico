@@ -52,7 +52,7 @@ void send_http_post(const char *mac) {
 int main() {
     stdio_init_all();
 
-    if (cyw43_arch_init()) {
+    if (cyw43_arch_init_with_country(CYW43_COUNTRY_SWEDEN)) {
         printf("WiFi init failed\n");
         return 1;
     }
@@ -61,10 +61,10 @@ int main() {
     printf("Connecting to WiFi...\n");
 
     if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD,
-                                            CYW43_AUTH_WPA2_AES_PSK, 10000)) {
+                                            CYW43_AUTH_WPA2_AES_PSK, 30000)) {
         printf("WiFi connection failed\n");
-        printf(WIFI_SSID);
-        printf(WIFI_PASSWORD);
+        printf("ssid %s \n",WIFI_SSID);
+        printf("psk %s \n",WIFI_PASSWORD);
         return 1;
     }
 
