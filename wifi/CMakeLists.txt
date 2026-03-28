@@ -11,9 +11,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-target_include_directories(${PROJECT_NAME} PRIVATE include)
 add_executable(${PROJECT_NAME} src/wifi.c)
 pico_enable_stdio_usb(${PROJECT_NAME} 1)
+
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
         WIFI_SSID="$ENV{WIFI_SSID}"
