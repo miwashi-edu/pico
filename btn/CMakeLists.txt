@@ -6,13 +6,13 @@ set(PICO_PLATFORM rp2350-arm-s CACHE STRING "Target platform")
 # MUST be before project()
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
-project(log C CXX ASM)
+project(btn C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-add_executable(${PROJECT_NAME} src/log.c)
+add_executable(${PROJECT_NAME} src/btn.c)
 pico_enable_stdio_usb(${PROJECT_NAME}  1)
 
 target_link_libraries(${PROJECT_NAME} pico_stdlib)
