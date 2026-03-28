@@ -32,6 +32,7 @@ int pico_led_init(void) {
 
 // Turn the led on or off
 void pico_set_led(bool led_on) {
+    printf("LED state: %d\n", led_on);
 #if defined(PICO_DEFAULT_LED_PIN)
     // Just set the GPIO on or off
     gpio_put(PICO_DEFAULT_LED_PIN, led_on);
@@ -42,6 +43,9 @@ void pico_set_led(bool led_on) {
 }
 
 int main() {
+    stdio_init_all();
+    sleep_ms(2000);  // wait for UART to settle
+    printf("Starting...\n");
     int rc = pico_led_init();
     hard_assert(rc == PICO_OK);
     while (true) {
