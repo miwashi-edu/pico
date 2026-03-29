@@ -6,8 +6,8 @@
 #include <string.h>
 
 #define BUTTON_PIN  15
-#define SERVER_HOST "192.168.1.8"
-#define SERVER_PORT 8050
+#define SERVER_HOST "192.168.1.135"
+#define SERVER_PORT 8080
 #define SERVER_PATH "/endpoint"
 
 static volatile bool button_pressed = false;
