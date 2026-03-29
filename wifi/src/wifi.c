@@ -43,6 +43,7 @@ void send_http_post(const char *mac) {
     ip_addr_t server_ip;
 
     if (dns_gethostbyname(SERVER_HOST, &server_ip, NULL, NULL) == ERR_OK) {
+        printf("Sending");
         tcp_connect(pcb, &server_ip, SERVER_PORT, NULL);
         tcp_write(pcb, request, strlen(request), TCP_WRITE_FLAG_COPY);
         tcp_output(pcb);
@@ -60,14 +61,12 @@ int main() {
     cyw43_arch_enable_sta_mode();
     printf("Connecting to WiFi...\n");
 
-    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD,
-                                            CYW43_AUTH_WPA2_AES_PSK, 30000)) {
+    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD,CYW43_AUTH_WPA2_AES_PSK, 30000)) {
         printf("WiFi connection failed\n");
         printf("ssid %s \n",WIFI_SSID);
         printf("psk %s \n",WIFI_PASSWORD);
         return 1;
     }
-
     printf("Connected!\n");
 
     // Print assigned IP address
