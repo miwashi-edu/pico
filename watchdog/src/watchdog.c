@@ -15,8 +15,11 @@ void button_callback(uint gpio, uint32_t events) {
 
 int init() {
     stdio_init_all();
-    printf("Starting...\n");
-
+    if (watchdog_caused_reboot()) {
+        printf("Recovered from watchdog reset\n");
+    } else {
+        printf("Starting...\n");
+    }
     watchdog_enable(WATCHDOG_FEED_TIME_MS, 1);
 
     gpio_init(BUTTON_PIN);
