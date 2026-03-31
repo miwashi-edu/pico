@@ -4,6 +4,7 @@
 
 #define BUTTON_PIN 15
 #define DELAY_MS 250
+#define STARTUP_DELAY_MS 250
 #define WATCHDOG_FEED_TIME_MS 2000
 
 void button_callback(uint gpio, uint32_t events) {
@@ -30,6 +31,7 @@ int init() {
 }
 
 int main() {
+    sleep_ms(STARTUP_DELAY_MS);
     init();
 
     while (1) {
