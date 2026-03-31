@@ -1,6 +1,5 @@
 #include "pico/stdlib.h"
 #include <stdio.h>
-#include "hardware/queue.h"
 
 #define BUTTON_PIN 15
 #define DELAY_MS 250
