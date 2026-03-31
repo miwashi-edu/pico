@@ -9,7 +9,7 @@
 #define DELAY_MS 250
 #define STARTUP_DELAY_MS 2000
 
-#define NUMER_OF_Q_ELEMENTS = 16
+#define NUMER_OF_Q_ELEMENTS 16
 
 volatile uint32_t counter = 0;
 // Queue for events
@@ -20,9 +20,6 @@ typedef struct {
     uint32_t events;
 } event_t;
 
-// --------------------
-// Slow process (NOT in ISR)
-// --------------------
 void slow_process(uint gpio) {
     printf("Start %d from GPIO %d\n", counter++, gpio);
 
@@ -34,9 +31,6 @@ void slow_process(uint gpio) {
     printf("Done\n");
 }
 
-// --------------------
-// Interrupt handler
-// --------------------
 void gpio_isr(uint gpio, uint32_t events) {
     if (gpio == BTN_RESET_PIN) {
         printf("Resetting counter\n");
@@ -49,9 +43,7 @@ void gpio_isr(uint gpio, uint32_t events) {
         .gpio = gpio,
         .events = events
     };
-    slow_process(gpio);
-    // Non-blocking push (drops if full)
-    //queue_try_add(&q, &e);
+    queue_try_add(&q, &e);
 }
 
 // --------------------
@@ -67,7 +59,7 @@ void init_btn(int pin) {
 void init_all() {
     printf("Initializing system\n");
 
-    queue_init(&q, sizeof(event_t), 16);
+    queue_init(&q, sizeof(event_t), NUMER_OF_Q_ELEMENTS);
 
     init_btn(BTN_A_PIN);
     init_btn(BTN_B_PIN);
@@ -78,9 +70,6 @@ void init_all() {
     gpio_set_irq_enabled_with_callback(BTN_RESET_PIN,GPIO_IRQ_EDGE_FALL,true,&gpio_isr);
 }
 
-// --------------------
-// Main
-// --------------------
 int main() {
     stdio_init_all();
     sleep_ms(STARTUP_DELAY_MS);
@@ -88,9 +77,7 @@ int main() {
     init_all();
 
     while (1) {
-        /*
         event_t e;
-
         if (queue_try_remove(&q, &e)) {
             switch (e.gpio) {
             case BTN_A_PIN:
@@ -104,8 +91,7 @@ int main() {
             default:
                 break;
             }
-        }*/
-
+        }
         tight_loop_contents();
     }
 }
