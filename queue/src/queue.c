@@ -8,6 +8,7 @@
 #define DELAY_MS 250
 #define STARTUP_DELAY_MS 2000
 
+volatile uint32_t counter = 0;
 // Queue for events
 queue_t q;
 
@@ -20,7 +21,7 @@ typedef struct {
 // Slow process (NOT in ISR)
 // --------------------
 void slow_process(uint gpio) {
-    printf("Start from GPIO %d\n", gpio);
+    printf("Start %d from GPIO %d\n", counter++, gpio);
 
     printf("Step A\n"); sleep_ms(DELAY_MS);
     printf("Step B\n"); sleep_ms(DELAY_MS);
