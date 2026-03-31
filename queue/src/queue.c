@@ -34,14 +34,14 @@ void slow_process(uint gpio) {
 // Interrupt handler
 // --------------------
 void gpio_isr(uint gpio, uint32_t events) {
-    printf("Button %d pressed\n",  gpio);
+    printf("GPIO %d pressed\n",  gpio);
     event_t e = {
         .gpio = gpio,
         .events = events
     };
-
+    slow_process(gpio);
     // Non-blocking push (drops if full)
-    queue_try_add(&q, &e);
+    //queue_try_add(&q, &e);
 }
 
 // --------------------
@@ -89,21 +89,23 @@ int main() {
     init_all();
 
     while (1) {
+        /*
         event_t e;
 
         if (queue_try_remove(&q, &e)) {
             switch (e.gpio) {
             case BTN_A_PIN:
-                printf("Button A pressed\n");
+                printf("GPIO %d handled\n", e.gpio);
                 slow_process(e.gpio);
                 break;
             case BTN_B_PIN:
-                printf("Button B pressed\n");
+                printf("GPIO %d handled\n", e.gpio);
                 slow_process(e.gpio);
                 break;
             default:
                 break;
             }
+            */
         }
 
         tight_loop_contents();
