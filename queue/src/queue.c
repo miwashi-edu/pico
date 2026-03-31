@@ -105,8 +105,7 @@ int main() {
             default:
                 break;
             }
-            */
-        }
+        }*/
 
         tight_loop_contents();
     }
