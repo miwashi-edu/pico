@@ -15,7 +15,6 @@ void button_callback(uint gpio, uint32_t events) {
 }
 
 int init() {
-    stdio_init_all();
     if (watchdog_caused_reboot()) {
         printf("Recovered from watchdog reset\n");
     } else {
@@ -31,6 +30,7 @@ int init() {
 }
 
 int main() {
+    stdio_init_all();
     sleep_ms(STARTUP_DELAY_MS);
     init();
 
