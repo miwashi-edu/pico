@@ -4,9 +4,12 @@
 
 #define BTN_A_PIN 14
 #define BTN_B_PIN 15
+#define BTN_RESET_PIN 16
 
 #define DELAY_MS 250
 #define STARTUP_DELAY_MS 2000
+
+#define NUMER_OF_Q_ELEMENTS = 16
 
 volatile uint32_t counter = 0;
 // Queue for events
@@ -35,7 +38,13 @@ void slow_process(uint gpio) {
 // Interrupt handler
 // --------------------
 void gpio_isr(uint gpio, uint32_t events) {
-    printf("GPIO %d pressed\n",  gpio);
+    if (gpio == BTN_RESET_PIN) {
+        printf("Resetting counter\n");
+        counter = 0;
+        printf("Counter reset\n");
+        return;
+    }
+    printf("GPIO %d pressed\n", gpio);
     event_t e = {
         .gpio = gpio,
         .events = events
@@ -62,22 +71,11 @@ void init_all() {
 
     init_btn(BTN_A_PIN);
     init_btn(BTN_B_PIN);
+    init_btn(BTN_RESET_PIN);
 
-    // Register ISR once
-    gpio_set_irq_enabled_with_callback(
-        BTN_A_PIN,
-        GPIO_IRQ_EDGE_FALL,
-        true,
-        &gpio_isr
-    );
-
-    // Enable second button IRQ
-    gpio_set_irq_enabled_with_callback(
-        BTN_B_PIN,
-        GPIO_IRQ_EDGE_FALL,
-        true,
-        &gpio_isr
-    );
+    gpio_set_irq_enabled_with_callback(BTN_A_PIN,GPIO_IRQ_EDGE_FALL,true,&gpio_isr);
+    gpio_set_irq_enabled_with_callback(BTN_B_PIN,GPIO_IRQ_EDGE_FALL,true,&gpio_isr);
+    gpio_set_irq_enabled_with_callback(BTN_RESET_PIN,GPIO_IRQ_EDGE_FALL,true,&gpio_isr);
 }
 
 // --------------------
